@@ -1,4 +1,7 @@
 ## 0.71.0 (Unreleased)
+FEATURES:
+* **New Resource:** `yandex_ydb_stream`
+
 ENHANCEMENTS:
 * allow `initial` of `0` for `yandex_kubernetes_node_group` `auto_scale` policy.
 * dataproc: now cluster version specified in create cluster request is treated as a semantic version prefix. So specified version `2.0` may lead to creation of cluster version `2.0.30` and this will not be considered a change in terraform state.
