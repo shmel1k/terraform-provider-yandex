@@ -169,7 +169,7 @@ func flattenYDBStreamDescription(d *schema.ResourceData, desc *Ydb_PersQueue_V1.
 		return err
 	}
 
-	return d.Set("database_endpoint", d.Get("database_endpoint").(string)) // TODO(shmel1k@): remove probably.
+	return d.Set("database_endpoint", d.Get("database_endpoint").(string))
 }
 
 func resourceYDBStreamRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
@@ -192,7 +192,7 @@ func resourceYDBStreamRead(ctx context.Context, d *schema.ResourceData, meta int
 	description, err := client.DescribeTopic(ctx, d.Get("stream_name").(string))
 	if err != nil {
 		if strings.Contains(err.Error(), "does not exist") {
-			d.SetId("") // NOTE(shmel1k@): marking as non-existing resource.
+			d.SetId("") // marking as non-existing resource.
 			return nil
 		}
 		return diag.Diagnostics{
@@ -222,7 +222,6 @@ func mergeYDBStreamConsumerSettings(
 	consumers []interface{},
 	readRules []*Ydb_PersQueue_V1.TopicSettings_ReadRule,
 ) (newReadRules []*Ydb_PersQueue_V1.TopicSettings_ReadRule) {
-	// TODO(shmel1k@): tests.
 	rules := make(map[string]*Ydb_PersQueue_V1.TopicSettings_ReadRule, len(readRules))
 	for i := 0; i < len(readRules); i++ {
 		rules[readRules[i].ConsumerName] = readRules[i]
@@ -235,10 +234,8 @@ func mergeYDBStreamConsumerSettings(
 	consumersMap := make(map[string]struct{})
 	for _, v := range consumers {
 		consumer := v.(map[string]interface{})
-		// TODO(shmel1k@): think about fields to add.
 		consumerName, ok := consumer["name"].(string)
 		if !ok {
-			// TODO(shmel1k@): think about error.
 			continue
 		}
 
@@ -261,7 +258,7 @@ func mergeYDBStreamConsumerSettings(
 
 		r, ok := rules[consumerName]
 		if !ok {
-			// NOTE(shmel1k@): stream was deleted by someone outside terraform or does not exist.
+			// stream was deleted by someone outside terraform or does not exist.
 			codecs := make([]Ydb_PersQueue_V1.Codec, 0, len(supportedCodecs))
 			for _, c := range supportedCodecs {
 				codec := c.(string)
@@ -311,7 +308,6 @@ func mergeYDBStreamSettings(
 		for _, c := range codecs {
 			cc, ok := ydbStreamCodecNameToCodec[strings.ToLower(c.(string))]
 			if !ok {
-				// TODO(shmel1k@): add validation of unsupported codecs. Use default if unknown is found.
 				panic(fmt.Sprintf("Unsupported codec %q found after validation", cc))
 			}
 			updatedCodecs = append(updatedCodecs, cc)
@@ -422,7 +418,6 @@ func resourceYandexYDBStream() *schema.Resource {
 		},
 
 		Timeouts: &schema.ResourceTimeout{
-			// TODO(shmel1k@): think about own timeouts.
 			Default: schema.DefaultTimeout(yandexYDBServerlessDefaultTimeout),
 		},
 

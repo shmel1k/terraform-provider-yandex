@@ -22,7 +22,7 @@ const (
 func init() {
 	resource.AddTestSweepers("yandex_ydb_stream", &resource.Sweeper{
 		Name: "yandex_ydb_stream",
-		F:    testSweepYDBDatabaseServerless, // NOTE(shmel1k@): all streams are stored in ydb databases.
+		F:    testSweepYDBDatabaseServerless, // all streams are stored in ydb databases.
 	})
 }
 
@@ -182,13 +182,13 @@ func TestAccYandexYDBStream_update(t *testing.T) {
 	beforeParams := testYandexYDBStreamParams{
 		streamName:        streamName,
 		partitionsCount:   2,
-		retentionPeriodMS: 1000 * 60 * 60, // NOTE(shmel1k@): 1 hour
+		retentionPeriodMS: 1000 * 60 * 60, // 1 hour
 		supportedCodecs:   ydbStreamAllowedCodecs,
 	}
 	afterParams := testYandexYDBStreamParams{
 		streamName:        streamName,
 		partitionsCount:   4,
-		retentionPeriodMS: 1000 * 60 * 60 * 4, // NOTE(shmel1k@): 4 hours.
+		retentionPeriodMS: 1000 * 60 * 60 * 4, // 4 hours.
 		supportedCodecs:   ydbStreamAllowedCodecs,
 	}
 

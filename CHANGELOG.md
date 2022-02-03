@@ -1,5 +1,6 @@
 ## 0.71.0 (Unreleased)
 FEATURES:
+* **New Data Source:** `yandex_ydb_stream`
 * **New Resource:** `yandex_ydb_stream`
 
 ENHANCEMENTS:
